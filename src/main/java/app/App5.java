@@ -10,6 +10,7 @@ import neuro.KohonenLayer;
 import view.ConsoleSpriteRender;
 import view.SpriteRender;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,6 +65,11 @@ public class App5 {
             }
         }
 
+        int[] det = kl.getDeterminativePositions(10, 0);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        Arrays.stream(det).forEach(System.out::println);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
         try {
             kl.calcTheta(learningSet, wrongList);
         } catch (NotDetermineSystemException e) {
@@ -84,8 +90,12 @@ public class App5 {
         System.out.println(gl);
         System.out.println("=============================================================");
 
-        Sprite test = gl.getSprite(kl.getTriggeredRecognizedVector(MutationFactory.getMutantSprite(StandardFactory.getSprite(7, FigureType.RIGHT), new Position(2,2))));
+        Sprite in = MutationFactory.getMutantSprite(StandardFactory.getSprite(7, FigureType.DOWN), 10);
+        console.render(in);
+        Sprite test = gl.getSprite(kl.getTriggeredRecognizedVector(in));
         console.render(test);
+
+
 
     }
 

@@ -154,4 +154,8 @@ public class KohonenLayer {
             neuron.vector.setCoordinatesValue(w, i);
         }
     }
+
+    public int[] getDeterminativePositions(int size, int group) {
+        return layer.get(group).getVector().getDeterminativePositions(size);
+    }
 }

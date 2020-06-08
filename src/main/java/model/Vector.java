@@ -4,6 +4,8 @@ import model.support.IncorrectLengthException;
 import model.support.Position;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Stream;
 
 public class Vector {
 
@@ -101,5 +103,29 @@ public class Vector {
         }
         sb.append('}');
         return sb.toString();
+    }
+
+    public int[] getDeterminativePositions(int size) {
+
+
+        double[] maxes = Arrays.stream(coordinates).sorted().skip(coordinates.length - size).toArray();
+        System.err.println("Det");
+        Arrays.stream(maxes).forEach(System.err::println);
+        Arrays.stream(coordinates).forEach(System.err::println);
+
+        int[] result = new int[size];
+        for (int i=0; i<size; ++i) {
+            int j=0;
+            while (j<coordinates.length) {
+                if (coordinates[j] == maxes[size-1-i]) {
+                    System.out.println("c[j] = " + coordinates[j]);
+                    System.out.println("s[-i] = " + maxes[i]);
+                    result[i] = j;
+                    break;
+                }
+                j++;
+            }
+        }
+        return result;
     }
 }
