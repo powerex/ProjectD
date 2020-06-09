@@ -1,7 +1,6 @@
 package neuro;
 
 import app.AppSettings;
-import neuro.Neuron;
 
 public class KohonenNeuron extends Neuron {
 

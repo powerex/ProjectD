@@ -6,7 +6,6 @@ import model.Vector;
 import model.support.IncorrectLengthException;
 import model.support.NotDetermineSystemException;
 
-import java.time.temporal.ValueRange;
 import java.util.*;
 
 public class KohonenLayer {

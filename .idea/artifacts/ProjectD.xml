@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="ProjectD">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProjectD</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="Visual" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="ProjectD.jar">
+        <element id="module-output" name="ProjectD" />
+      </element>
+    </root>
+  </artifact>
+</component>

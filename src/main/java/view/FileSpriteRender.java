@@ -15,8 +15,8 @@ public class FileSpriteRender implements SpriteRender {
 
     private final int CELL_SIZE = 10;
 
-    private BufferedImage renderImage(Sprite image) {
-        int size = CELL_SIZE * AppSettings.BASE_SIZE;
+    public BufferedImage renderImage(Sprite image, int dim) {
+        int size = CELL_SIZE * dim;
         final BufferedImage res = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB );
         for (int row = 0; row < size; row++){
             for (int col = 0; col < size; col++){
@@ -41,13 +41,13 @@ public class FileSpriteRender implements SpriteRender {
             directory.mkdir();
         }
         for (int i=0; i<images.size(); ++i) {
-            saveImage(renderImage(images.get(i)), folder + '/' + name + String.format("%02d",i+1));
+            saveImage(renderImage(images.get(i), AppSettings.BASE_SIZE), folder + '/' + name + String.format("%02d",i+1));
         }
     }
 
     @Override
     public void render(Sprite image) {
-        saveImage(renderImage(image), "sprite");
+//        saveImage(renderImage(image), "sprite");
     }
 
     public boolean[][] getTableFromImage(BufferedImage image) {

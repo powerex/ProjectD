@@ -1,10 +1,7 @@
-package app;
+package model;
 
+import app.AppSettings;
 import javafx.util.Pair;
-import model.FigureType;
-import model.Sprite;
-import model.StandardFactory;
-import model.Vector;
 import model.gen.GeneratorSet;
 import model.support.IncorrectLengthException;
 import model.support.NotDetermineSystemException;
