@@ -6,7 +6,6 @@ import model.Vector;
 public class GrosbergNeuron extends Neuron {
 
     private static long id = 0;
-    private double level = 0.5;
 
     @Override
     protected void inc() {

@@ -2,6 +2,9 @@ package model;
 
 import model.support.Position;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public abstract class Sprite {
 
     protected boolean[][] table;
@@ -33,4 +36,19 @@ public abstract class Sprite {
         return table[pos.row][pos.col];
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sprite sprite = (Sprite) o;
+        return size == sprite.size &&
+                Arrays.equals(table, sprite.table);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(size);
+        result = 31 * result + Arrays.hashCode(table);
+        return result;
+    }
 }

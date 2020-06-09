@@ -19,7 +19,7 @@ public class GrosbergLayer {
         }
     }
 
-    public void learn(Vector kohonenVector, Sprite associatedSprite) {
+    public void study(Vector kohonenVector, Sprite associatedSprite) {
         Vector v = new Vector(associatedSprite, false);
 
         System.out.print("Kohonen vector");
@@ -37,11 +37,15 @@ public class GrosbergLayer {
         }
     }
 
+    public void info() {
+        for (GrosbergNeuron n: layer) {
+            System.out.println(n);
+        }
+    }
+
     public Sprite getSprite(Vector kohonenVector) {
         boolean[][] table = new boolean[AppSettings.OUT_SIZE][AppSettings.OUT_SIZE];
-
         double[] v = new double[AppSettings.GROSBERG_NEURON_COUNT];
-
         for (int i=0; i<v.length; ++i) {
             v[i] = 0;
             for (int j=0; j<AppSettings.KOHONEN_NEURON_COUNT; ++j) {
@@ -49,8 +53,9 @@ public class GrosbergLayer {
             }
         }
 
+
         for (int i=0; i<v.length; ++i) {
-            table[i / AppSettings.OUT_SIZE][i % AppSettings.OUT_SIZE] = v[i] > 0.5;
+            table[i / AppSettings.OUT_SIZE][i % AppSettings.OUT_SIZE] = v[i] >= 0.6 ;
         }
 
         return new Figure(table);

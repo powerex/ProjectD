@@ -12,21 +12,14 @@ import java.util.*;
 public class KohonenLayer {
 
     List<KohonenNeuron> layer = new LinkedList<>();
+    HashMap<Integer, Sprite> initList = new HashMap<>();
     double alpha;
-
-    public KohonenLayer() {
-        alpha = 0.7;
-        for (int i = 0; i < AppSettings.KOHONEN_NEURON_COUNT; ++i) {
-            layer.add(new KohonenNeuron());
-        }
-    }
-
 
     public KohonenLayer(List<Sprite> initialList) throws IncorrectLengthException {
         alpha = 0.7;
-        Set<Integer> workSet = new HashSet<>();
+        List<Integer> workList = new LinkedList<>();
         do {
-            workSet.clear();
+            workList.clear();
             layer.clear();
             for (int i = 0; i < initialList.size(); ++i) {
                 layer.add(new KohonenNeuron());
@@ -40,15 +33,35 @@ public class KohonenLayer {
                     ++i;
                 }
                 int index = net.getIndexOfMaxValue();
-                workSet.add(index);
+                workList.add(index);
                 System.out.println("Index = " + index);
             }
-            System.out.println("=============");
-        } while (workSet.size() != initialList.size());
+        } while (new HashSet(workList).size() != initialList.size());
+
+        for (int i=0; i<workList.size(); ++i) {
+            initList.put(workList.get(i), initialList.get(i));
+        }
 
         System.out.println("OK");
         System.out.println(this);
 
+    }
+
+    public int getGroupIndex(Sprite baseImage) {
+        for (Map.Entry<Integer, Sprite> s: initList.entrySet()) {
+            if (s.getValue().equals(baseImage))
+                return s.getKey();
+        }
+        return -1;
+    }
+
+    public int getRandomOtherGroupIndex(Sprite sprite) {
+        int index = getGroupIndex(sprite);
+        int result;
+        do {
+            result = (int) Math.round(Math.random()*initList.size());
+        } while (result != index);
+        return result;
     }
 
     public void calcTheta(List<Sprite> rightSet, List<Sprite> wrongSet) throws IncorrectLengthException, NotDetermineSystemException {
@@ -115,9 +128,23 @@ public class KohonenLayer {
 
     public Vector getTriggeredRecognizedVector(Sprite sprite) {
         Vector v = getRecognizedVector(sprite);
-        for (int i = 0; i < v.getLength(); ++i) {
-            v.setCoordinatesValue((v.getCoordinate(i) < layer.get(i).getTheta()) ? 0 : 1, i);
+
+        int maxIndex = 0;
+        for (int i = 1; i < v.getLength(); ++i) {
+            if (v.getCoordinate(i) > v.getCoordinate(maxIndex))
+                maxIndex = i;
         }
+
+        for (int i = 0; i < v.getLength(); ++i) {
+            if (v.getCoordinate(i) < layer.get(i).getTheta())
+                v.setCoordinatesValue(0, i);
+        }
+
+        for (int i=0; i<v.getLength(); ++i) {
+            v.setCoordinatesValue((i == maxIndex) ? 1 : 0, i);
+        }
+
+
         return v;
     }
 

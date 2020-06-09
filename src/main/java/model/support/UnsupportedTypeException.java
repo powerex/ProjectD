@@ -1,4 +1,4 @@
 package model.support;
 
-public class UnsupportedTypeException extends Throwable {
+public class UnsupportedTypeException extends Exception {
 }

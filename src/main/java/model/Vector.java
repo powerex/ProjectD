@@ -1,10 +1,12 @@
 package model;
 
+import javafx.util.Pair;
 import model.support.IncorrectLengthException;
 import model.support.Position;
+import org.omg.CORBA.INTERNAL;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Vector {
@@ -107,25 +109,17 @@ public class Vector {
 
     public int[] getDeterminativePositions(int size) {
 
+        List<Pair<Integer, Double>> list = new LinkedList<>();
+        for (int i=0; i<coordinates.length; ++i)
+            list.add(new Pair<>(i, coordinates[i]));
+        list.sort(Comparator.comparing(Pair::getValue));
 
-        double[] maxes = Arrays.stream(coordinates).sorted().skip(coordinates.length - size).toArray();
-        System.err.println("Det");
-        Arrays.stream(maxes).forEach(System.err::println);
-        Arrays.stream(coordinates).forEach(System.err::println);
+        List<Integer> indexes = list.stream().skip(coordinates.length - size - 1).map(Pair::getKey).collect(Collectors.toList());
+
+        indexes.stream().forEach(System.err::println);
 
         int[] result = new int[size];
-        for (int i=0; i<size; ++i) {
-            int j=0;
-            while (j<coordinates.length) {
-                if (coordinates[j] == maxes[size-1-i]) {
-                    System.out.println("c[j] = " + coordinates[j]);
-                    System.out.println("s[-i] = " + maxes[i]);
-                    result[i] = j;
-                    break;
-                }
-                j++;
-            }
-        }
+
         return result;
     }
 }

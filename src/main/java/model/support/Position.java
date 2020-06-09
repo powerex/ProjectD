@@ -10,6 +10,10 @@ public class Position {
         this.col = col;
     }
 
+    public static Position getPositionFromFlatIndex(int flatIndex, int cols) {
+        return new Position(flatIndex / cols, flatIndex % cols);
+    }
+
     public int getFlatPosition(int size) {
         return row * size + col;
     }
